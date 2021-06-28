@@ -28,6 +28,16 @@ class DatabaseSeeder extends Seeder
        "email" => "rabbi@gmail.com",
         "password" => Hash::make("1234"),
     ]);
+        $user3 = User::create([
+            "name" => "Editor 2",
+            "email" => "editor2@gmail.com",
+            "password" => Hash::make("1234"),
+        ]);
+        $user4 = User::create([
+            "name" => "Editor 3",
+            "email" => "editor3@gmail.com",
+            "password" => Hash::make("1234"),
+        ]);
 
         $role1 = Role::create([
             "name" => "ROLE_ADMIN",
@@ -39,7 +49,9 @@ class DatabaseSeeder extends Seeder
             "name" => "ROLE_USER",
         ]);
         $user1->roles()->attach($role1);
-        $user2->roles()->attach($role3);
+        $user2->roles()->attach($role2);
+        $user3->roles()->attach($role2);
+        $user4->roles()->attach($role2);
 
 
     }

@@ -15,7 +15,7 @@ class User extends Model
     public function posts(){
         return $this->hasMany(Posts::class);
     }
-    public  function roles()
+    public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_user')->withTimestamps();
     }

@@ -28,12 +28,17 @@ Route::get('/',[PagesController::class,'login'])->name('login.page');
 Route::get('/register',[PagesController::class,'register'])->name('register.page');
 Route::post('/login/User',[PagesController::class,'loginUser'])->name('login.user');
 Route::post('/register/User',[PagesController::class,'registerUser'])->name('register.user');
+Route::post('/logout/User',[PagesController::class,'logoutUser'])->name('logout.user');
 // private route
 Route::middleware(['user.auth'])->group(function (){
+
+    Route::middleware(['user.role:ROLE_ADMIN,ROLE_EDITOR'])->group(function (){
+        Route::resource('posts',PostsController::class);
+    });
+
     Route::get('/home',[PagesController::class,'home'])->name('home.page');
     Route::get('/about',[PagesController::class,'about'])->name('about.page');
     Route::get('/services',[PagesController::class,'services'])->name('services.page');
-    Route::resource('posts',PostsController::class);
     Route::get('/posts',[PostsController::class,'index'])->name('posts.page');
     Route::put('/posts/delete/{id}',[PostsController::class,'delete'])->name('posts.delete');
 

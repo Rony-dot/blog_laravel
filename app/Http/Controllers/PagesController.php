@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 
@@ -32,6 +33,7 @@ class PagesController extends Controller
 
     public function loginUser(Request $request){
 //        $user = User::find($request->email);
+
         $user = User::where('email',$request->email)->first();
         if($user==null){
             return redirect()->back()->with([
@@ -46,15 +48,23 @@ class PagesController extends Controller
             ]);
         }
 
-        Session::put('email',$request->email);
+
+        Session::put('user_id',$user->id);
 
         return redirect(route('home.page'))->with(['msg'=>"Logged in Successfully"]);
 
     }
 
-    public function logoutUser()
+    public function logoutUser(Request  $request)
     {
+//        $request->session()->destroy($request->session()->get('user_id'));
 
+//        Auth::logout();
+        $request->session()->forget('user_id');
+        $request->session()->flush();
+        return redirect(route('login.page'))->with([
+           'msg' => "Logged out successfully"
+        ]);
     }
 
 

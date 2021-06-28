@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostAddRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades;
 use App\Models\Posts;
+use Illuminate\Support\Facades\Session;
 
 class PostsController extends Controller
 {
@@ -23,7 +25,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        //
+//        $posts = Posts::orderBy('created_at','desc')->where('user_id',session()->get('user_id'))->paginate(10);
         $posts = Posts::orderBy('created_at','desc')->paginate(10);
 //        $posts = Posts::all();
 //        $count = Posts::count();
@@ -51,12 +53,24 @@ class PostsController extends Controller
      */
     public function store(PostAddRequest $request)
     {
-//        dd($request->all());
-        $post= new Posts;
+        $user = User::find($request->session()->get('user_id'));
+//        $user = User::where('email',$request->session()->get('user_id'));
+//        dd($request->all(), $request->session()->get('user_id') );
+
+//        $post= new Posts;
+//        $post->title = $request->title;
+//        $post->body = $request->body;
+//        //        dd($post->title, $post->body);
+//        $post->save();
+
+//        Posts::create($request->all());
+
+        $post = new Posts();
         $post->title = $request->title;
         $post->body = $request->body;
-        //        dd($post->title, $post->body);
-        $post->save();
+        $post['user_id']=$user->id;
+        $post = $post->save();
+
         return redirect(route('posts.page'))->with(['msg'=>'created successfully']);
 
     }

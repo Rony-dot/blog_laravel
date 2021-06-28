@@ -19,8 +19,8 @@ class UserAuthMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-//        $user = User::find($request->session()->get('email'));
-        if(!Session::has('email')){
+//        $user = User::find($request->session()->get('user_id'));
+        if(!Session::has('user_id')){
             return redirect(route('login.page'))->with([
                'msg' => 'Unauthorized Access'
             ]);

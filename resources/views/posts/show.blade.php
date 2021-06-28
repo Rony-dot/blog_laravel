@@ -12,9 +12,17 @@
                </h3>
                <hr>
                <small class=" mt-5"> {{$post->created_at}}</small> <br>
-               <a class=" mt-3 btn btn-primary btn-sm" href="{{route('posts.edit',$post->id)}}">Edit </a>
-               <a class=" mt-3 btn btn-primary btn-sm" href="#" onclick="event.preventDefault();
-                document.getElementById('post-id-{{$post->id}}').submit() ">Delete </a>
+               <small> {{$post->id}}</small> <br>
+               @if((session()->has('user_id')))
+                       @if($post->user_id == session()->get('user_id'))
+
+                           <a class=" mt-3 btn btn-primary btn-sm" href="{{route('posts.edit',$post->id)}}">Edit </a>
+                           <a class=" mt-3 btn btn-primary btn-sm" href="#" onclick="event.preventDefault();
+                               document.getElementById('post-id-{{$post->id}}').submit() ">Delete </a>
+                   @endif
+               @endif
+
+
            </div>
            </div>
     </div>

@@ -26,7 +26,21 @@
                 <li><a href="{{route('about.page')}}" class="nav-link px-2 text-white">About</a></li>
                 <li><a href="{{route('services.page')}}" class="nav-link px-2 text-white">Services</a></li>
                 <li><a href="{{route('posts.page')}}" class="nav-link px-2 text-white">Posts</a></li>
-                <li><a href="{{url('/posts/create')}}" class="nav-link px-2 text-white">Create Post</a></li>
+{{--                @if(\App\Models\User::find(session()->get('user_id'))->roles()->where('name','ROLE_USER') ||--}}
+{{--                    \App\Models\User::find(session()->get('user_id'))->roles()->where('name','ROLE_USER'))--}}
+{{--                <li><a href="{{url('/posts/create')}}" class="nav-link px-2 text-white">Create Post</a></li>--}}
+{{--                @endif--}}
+
+{{--                {{$role_user = \App\Models\User::find(session()->get('user_id'))->roles()->where('name','ROLE_USER')}}--}}
+
+                @if((\App\Models\User::find(session()->has('user_id'))))
+                    @if( (\App\Models\User::find(session()->get('user_id'))->roles()->where('name','ROLE_ADMIN')->first() )
+                ||  \App\Models\User::find(session()->get('user_id'))->roles()->where('name','ROLE_EDITOR')->first() )
+                        <li><a href="{{url('/posts/create')}}" class="nav-link px-2 text-white">Create Post</a></li>
+                    @endif
+                @endif
+
+
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -36,6 +50,7 @@
             <div class="text-end">
                 <button type="button" class="btn btn-outline-light me-2"><a href="{{route('login.page')}}">Login</a></button>
                 <button type="button" class="btn btn-warning"><a href="{{route('register.page')}}">Sign-up</a></button>
+                <button type="button" class="btn btn-warning"><a onclick="event.preventDefault(); document.getElementById('log-out-form').submit()" href="{{route('register.page')}}">Log out</a></button>
             </div>
         </div>
     </div>
@@ -43,8 +58,16 @@
 <!-- Option 1: Bootstrap Bundle with Popper -->
 @yield('content')
 
+<form id="log-out-form" action="{{route('logout.user')}}" method="Post">
+@csrf
+</form>
 
-
+@if(\App\Models\User::find(session()->get('user_id')))
+    <h3> hello mr. {{ \App\Models\User::find(session()->get('user_id'))->name }}</h3>
+    <h3>you are a {{\App\Models\User::find(session()->get('user_id'))->roles()->first()->name}}</h3>
+@else
+    <h1> you are a guest</h1>
+@endif
 
 
 <!-- Option 2: Separate Popper and Bootstrap JS -->
