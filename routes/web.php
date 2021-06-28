@@ -22,11 +22,22 @@ use Illuminate\Support\Facades\Route;
 //Route::get('/','PagesController@home');
 //Route::get('/about','PagesController@about');
 
-Route::get('/',[PagesController::class,'home'])->name('home.page');
-Route::get('/about',[PagesController::class,'about'])->name('about.page');
-Route::get('/services',[PagesController::class,'services'])->name('services.page');
-Route::resource('posts',PostsController::class);
-Route::get('/posts',[PostsController::class,'index'])->name('posts.page');
-Route::put('/posts/delete/{id}',[PostsController::class,'delete'])->name('posts.delete');
+
+// public route
+Route::get('/',[PagesController::class,'login'])->name('login.page');
+Route::get('/register',[PagesController::class,'register'])->name('register.page');
+Route::post('/login/User',[PagesController::class,'loginUser'])->name('login.user');
+Route::post('/register/User',[PagesController::class,'registerUser'])->name('register.user');
+// private route
+Route::middleware(['user.auth'])->group(function (){
+    Route::get('/home',[PagesController::class,'home'])->name('home.page');
+    Route::get('/about',[PagesController::class,'about'])->name('about.page');
+    Route::get('/services',[PagesController::class,'services'])->name('services.page');
+    Route::resource('posts',PostsController::class);
+    Route::get('/posts',[PostsController::class,'index'])->name('posts.page');
+    Route::put('/posts/delete/{id}',[PostsController::class,'delete'])->name('posts.delete');
+
+});
+
 
 

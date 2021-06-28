@@ -14,6 +14,13 @@ class PostsController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
+
+
+    public function __construct()
+    {
+        $this->middleware('user.auth');
+    }
+
     public function index()
     {
         //
