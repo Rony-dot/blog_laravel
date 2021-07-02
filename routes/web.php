@@ -36,9 +36,14 @@ Route::middleware(['user.auth'])->group(function (){
         Route::resource('posts',PostsController::class);
     });
 
+    
+    Route::get('/users',[PagesController::class,'users'])->name('users');
+
     Route::get('/home',[PagesController::class,'home'])->name('home.page');
     Route::get('/about',[PagesController::class,'about'])->name('about.page');
     Route::get('/services',[PagesController::class,'services'])->name('services.page');
+    Route::get('/edit/profile',[PagesController::class,'editProfile'])->name('edit.profile');
+    Route::put('/update/profile',[PagesController::class,'updateProfile'])->name('update.profile');
     Route::get('/posts',[PostsController::class,'index'])->name('posts.page');
     Route::put('/posts/delete/{id}',[PostsController::class,'delete'])->name('posts.delete');
 

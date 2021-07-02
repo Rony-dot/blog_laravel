@@ -37,10 +37,11 @@
                     @if( (\App\Models\User::find(session()->get('user_id'))->roles()->where('name','ROLE_ADMIN')->first() )
                 ||  \App\Models\User::find(session()->get('user_id'))->roles()->where('name','ROLE_EDITOR')->first() )
                         <li><a href="{{url('/posts/create')}}" class="nav-link px-2 text-white">Create Post</a></li>
+                       
                     @endif
                 @endif
-
-
+                <li><a href="{{route('edit.profile')}}" class="nav-link px-2 text-white">Edit Profile</a></li>
+                <li><a href="{{route('users')}}" class="nav-link px-2 text-white">Users</a></li>
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">

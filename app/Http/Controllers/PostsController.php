@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades;
 use App\Models\Posts;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\File;
 
 class PostsController extends Controller
 {
@@ -69,6 +70,14 @@ class PostsController extends Controller
         $post->title = $request->title;
         $post->body = $request->body;
         $post['user_id']=$user->id;
+        if($request->hasfile('post_image')){
+            $file = $request->file('post_image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time().".".$extension;
+            $file->move('uploads/posts/',$fileName);
+            $post->post_image = $fileName;
+        }
+        
         $post = $post->save();
 
         return redirect(route('posts.page'))->with(['msg'=>'created successfully']);
@@ -123,7 +132,20 @@ class PostsController extends Controller
         $post->title = $request->title;
         $post->body = $request->body;
         //        dd($post->title, $post->body);
-        $post->save();
+
+        if($request->hasfile('post_image')){
+            $destination = 'uploads/posts/'.$post->post_image;
+            if(File::exists($destination)){
+                File::delete($destination);
+            }
+            $file = $request->file('post_image');
+            $extension = $file->getClientOriginalExtension();
+            $fileName = time().".".$extension;
+            $file->move('uploads/posts/',$fileName);
+            $post->post_image = $fileName;
+        }
+        
+        $post->update();
         return redirect(route('posts.page'))->with(['msg'=>'Updated successfully']);
     }
 
@@ -144,6 +166,10 @@ class PostsController extends Controller
     public function delete($id)
     {
         $post = Posts::find($id);
+        $destination = 'uploads/posts/'.$post->post_image;
+        if(File::exists($destination)){
+            File::delete($destination);
+        }
         $post->delete();
         return redirect(route('posts.page'))->with('msg','deleted successfully');
     }

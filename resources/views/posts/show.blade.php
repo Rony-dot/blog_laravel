@@ -3,6 +3,7 @@
     <div class="container mt-5">
             <a class="text-light btn " href="{{route('posts.page')}}">Go back</a>
        <div class="card">
+       <img src="{{asset('uploads/posts/'.$post->post_image)}}" width="300px" height="300px" alt="" class="card-img-top">
            <div class="card-body">
                <h1 class="card-title">
                    {{$post->title}}

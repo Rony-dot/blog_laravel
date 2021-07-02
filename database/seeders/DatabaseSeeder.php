@@ -54,5 +54,38 @@ class DatabaseSeeder extends Seeder
         $user4->roles()->attach($role2);
 
 
+        $user1->posts()->create([
+            "title" => "post 1",
+            "body" => "body 1"
+        ]);
+        $user1->posts()->create([
+            "title" => "post 2",
+            "body" => "body 2"
+        ]);
+        $user2->posts()->create([
+            "title" => "post 3",
+            "body" => "body 3"
+        ]);
+        $user2->posts()->create([
+            "title" => "post 4",
+            "body" => "body 4"
+        ]);
+        $user3->posts()->create([
+            "title" => "post 5",
+            "body" => "body 5"
+        ]);
+        $user3->posts()->create([
+            "title" => "post 6",
+            "body" => "body 6"
+        ]);
+        $user4->posts()->create([
+            "title" => "post 7",
+            "body" => "body 7"
+        ]);
+        $user4->posts()->create([
+            "title" => "post 8",
+            "body" => "body 8"
+        ]);
+
     }
 }
