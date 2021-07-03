@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\PostsController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -38,6 +39,9 @@ Route::middleware(['user.auth'])->group(function (){
 
     
     Route::get('/users',[PagesController::class,'users'])->name('users');
+    Route::get('/admin/edit/user/{id}',[AdminController::class,'adminEditUser'])->name('admin.edit.user');
+    Route::put('/admin/update/user/{id}',[AdminController::class,'adminUpdateUser'])->name('admin.update.user');
+    Route::put('/admin/delete/user/{id}',[AdminController::class,'adminDeleteUser'])->name('admin.delete.user');
 
     Route::get('/home',[PagesController::class,'home'])->name('home.page');
     Route::get('/about',[PagesController::class,'about'])->name('about.page');

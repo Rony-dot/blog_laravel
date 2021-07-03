@@ -27,8 +27,8 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->roles()->first()->name }}</td>
                                 <td><img src="{{asset('uploads/users/'.$user->profile_image)}}" width="70px" height="70px" alt="Profile Picture"></td>
-                                <td><a href="" class="btn btn-primary btn-sm">Edit</a></td>
-                                <td><a href="" class="btn btn-danger btn-sm">Delete</a></td>
+                                <td><a href="{{route('admin.edit.user',$user->id)}}" class="btn btn-primary btn-sm">Edit</a></td>
+                                <td><a href="{{route('admin.delete.user',$user->id)}}" class="btn btn-danger btn-sm">Delete</a></td>
                             </tr>
                         @endforeach
                         </tbody>

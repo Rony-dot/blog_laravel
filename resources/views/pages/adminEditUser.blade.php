@@ -4,12 +4,12 @@
     <div class="row">
         <div class="col-md-12">
         <x-alert/>
-            <div class="card border-[rimary">
+            <div class="card">
                 <div class="card-header">
-                <h4>Edit Profile Here!</h4>
+                <h4>Edit User Profile Here!</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('update.profile')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('admin.update.user',$user->id)}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
                         <div class="form-group mb-3">
@@ -24,12 +24,13 @@
                             <label for="password">Password</label>
                             <input type="password" name="password"  value="" class="form-control">
                         </div>
-                        <div class="form-group">
-                        <div class="list-group">
-                        @foreach($user->roles as $role)
-                                <li class="list-group-item border-primary"> {{$role->name}} </li>
+                        <div class="form-group mb-3">
+                        <label for="role">Select Role</label>
+                            <select name="role" class="custom-select">
+                            @foreach(\App\Models\Role::all() as $role)
+                                <option value="{{$role->name}}"> {{$role->name}} </option>
                             @endforeach
-                        </div>
+                            </select>
                         </div>
                         <div class="form-group mb-3">
                             <label for="profile_image">Profile Image</label>
@@ -37,7 +38,7 @@
                             <img src="{{asset('uploads/users/'.$user->profile_image)}}" width="100px" height="100px" alt="">
                         </div>
                         <div class="form-group mb-3">
-                        <button type="submit" class="btn btn-primary">Register</button>
+                        <button type="submit" class="btn btn-primary">Update User</button>
                         </div>
                     </form>
                 </div>
