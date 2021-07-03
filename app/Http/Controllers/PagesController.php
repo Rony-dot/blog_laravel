@@ -32,12 +32,7 @@ class PagesController extends Controller
         return view('pages.register');
     }
 
-    public function users(){
-        $users =User::all();
-
-        return view('pages.users',compact('users'));
-    }
-
+  
     public function registerUser(Request $request)
     {
         $user = new User();

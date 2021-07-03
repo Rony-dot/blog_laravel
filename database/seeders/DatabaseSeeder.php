@@ -39,6 +39,18 @@ class DatabaseSeeder extends Seeder
             "password" => Hash::make("1234"),
         ]);
 
+        $user5 = User::create([
+            "name" => "Demo User 1",
+            "email" => "demouser1@gmail.com",
+            "password" => Hash::make("1234"),
+        ]);
+
+        $user6 = User::create([
+            "name" => "Demo User 2",
+            "email" => "demouser2@gmail.com",
+            "password" => Hash::make("1234"),
+        ]);
+
         $role1 = Role::create([
             "name" => "ROLE_ADMIN",
         ]);
@@ -48,10 +60,13 @@ class DatabaseSeeder extends Seeder
         $role3 = Role::create([
             "name" => "ROLE_USER",
         ]);
+
         $user1->roles()->attach($role1);
         $user2->roles()->attach($role2);
         $user3->roles()->attach($role2);
         $user4->roles()->attach($role2);
+        $user5->roles()->attach($role3);
+        $user6->roles()->attach($role3);
 
 
         $user1->posts()->create([
@@ -86,6 +101,15 @@ class DatabaseSeeder extends Seeder
             "title" => "post 8",
             "body" => "body 8"
         ]);
+        $user5->posts()->create([
+            "title" => "post 9",
+            "body" => "body 9"
+        ]);
+        $user6->posts()->create([
+            "title" => "post 10",
+            "body" => "body 10"
+        ]);
+
 
     }
 }

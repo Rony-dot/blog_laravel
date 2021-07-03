@@ -39,9 +39,13 @@
                         <li><a href="{{url('/posts/create')}}" class="nav-link px-2 text-white">Create Post</a></li>
                        
                     @endif
-                @endif
-                <li><a href="{{route('edit.profile')}}" class="nav-link px-2 text-white">Edit Profile</a></li>
+                    <li><a href="{{route('edit.profile')}}" class="nav-link px-2 text-white">Edit Profile</a></li>
+                    @if(\App\Models\User::find(session()->get('user_id'))->roles()->where('name','ROLE_ADMIN')->first()  )
                 <li><a href="{{route('users')}}" class="nav-link px-2 text-white">Users</a></li>
+                    @endif
+                @endif
+                
+ 
             </ul>
 
             <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
@@ -49,10 +53,13 @@
             </form>
 
             <div class="text-end">
+            @if((\App\Models\User::find(session()->has('user_id'))))
+               <button type="button" class="btn btn-warning"><a onclick="event.preventDefault(); document.getElementById('log-out-form').submit()" href="{{route('register.page')}}">Log out</a></button>
+            @else
                 <button type="button" class="btn btn-outline-light me-2"><a href="{{route('login.page')}}">Login</a></button>
                 <button type="button" class="btn btn-warning"><a href="{{route('register.page')}}">Sign-up</a></button>
-                <button type="button" class="btn btn-warning"><a onclick="event.preventDefault(); document.getElementById('log-out-form').submit()" href="{{route('register.page')}}">Log out</a></button>
-            </div>
+            @endif
+                </div>
         </div>
     </div>
 </header>
